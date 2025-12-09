@@ -1,25 +1,23 @@
 package expression;
 
-import expression.exceptions.ExceptionsChecker;
-
-public class Multiply extends Binary {
-
-    public Multiply(MyExpression left, MyExpression right) {
+public class GCD extends Binary{
+    public GCD(MyExpression left, MyExpression right) {
         super(left, right);
     }
 
     @Override
     protected String symbol() {
-        return "*";
+        return "gcd";
     }
 
     @Override
     protected int apply(int left, int right) {
-        return ExceptionsChecker.multiply(left, right);
+        return evklids_alg(left, right);
     }
 
     @Override
     protected double apply(double left, double right) {
-        return left * right;
+        return 0;
     }
+
 }

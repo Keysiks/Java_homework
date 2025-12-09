@@ -3,6 +3,7 @@ package expression.exceptions;
 import base.Selector;
 import expression.TripleExpression;
 import expression.parser.ExpressionParser;
+
 import static expression.parser.Operations.*;
 
 /**
@@ -14,6 +15,9 @@ public final class ExceptionsTest {
 
     public static final Selector SELECTOR = Selector.composite(ExceptionsTest.class, ExceptionsTester::new, "easy", "hard")
             .variant("Base", TRIPLE, ADD, SUBTRACT, MULTIPLY, DIVIDE, NEGATE)
+            .variant("4142", GCD, LCM)
+            .variant("4749", POW, LOG)
+
             .selector();
 
     private ExceptionsTest() {

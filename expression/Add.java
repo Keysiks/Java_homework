@@ -1,5 +1,7 @@
 package expression;
 
+import expression.exceptions.ExceptionsChecker;
+
 public class Add extends Binary {
     public Add(MyExpression left, MyExpression right) {
         super(left, right);
@@ -14,7 +16,7 @@ public class Add extends Binary {
 
     @Override
     protected int apply(int left, int right) {
-        return left + right;
+        return ExceptionsChecker.add(left, right);
     }
 
     @Override

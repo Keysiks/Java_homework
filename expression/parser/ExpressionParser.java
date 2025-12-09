@@ -17,12 +17,32 @@ public class ExpressionParser implements TripleParser {
         }
 
         MyExpression parseExpression() {
-            MyExpression result = parseOr();
+            MyExpression result = parseGcdLcm();
             skipWhitespace();
             if (!checkEOF()) {
                 throw source.error("Unexpected character: " + current());
             }
             return result;
+        }
+
+        private  MyExpression parseGcdLcm() {
+            MyExpression left = parseOr();
+            while (true) {
+                skipWhitespace();
+                if (takeWord("gcd")) {
+                    if (Character.isDigit(current())) {
+                        throw source.error("Unexpected character: " + current());
+                    }
+                    left = new GCD(left, parseAddSub());
+                } else if (takeWord("lcm")) {
+                    if (Character.isDigit(current())) {
+                        throw source.error("Unexpected character: " + current());
+                    }
+                    left = new LCM(left, parseAddSub());
+                } else {
+                    return left;
+                }
+            }
         }
 
         private MyExpression parseOr() {
@@ -99,7 +119,7 @@ public class ExpressionParser implements TripleParser {
                 return new Negate(parseUnary());
             }
             if (take('(')) {
-                MyExpression inside = parseOr();
+                MyExpression inside = parseGcdLcm();
                 skipWhitespace();
                 expect(')');
                 return inside;
@@ -119,7 +139,11 @@ public class ExpressionParser implements TripleParser {
             while (Character.isLetterOrDigit(current())) {
                 sb.append(take());
             }
-            return new Variable(sb.toString());
+            String name = sb.toString();
+            if (!name.equals("x") && !name.equals("y") && !name.equals("z")) {
+                throw source.error("Unexpected variable: " + name);
+            }
+            return new Variable(name);
         }
 
         private MyExpression parseNumber(boolean negative) {
@@ -132,6 +156,9 @@ public class ExpressionParser implements TripleParser {
             }
             if (sb.length() == (negative ? 1 : 0)) {
                 throw source.error("Number expected");
+            }
+            if (Character.isLetter(current())) {
+                throw source.error("Unexpected character: " + current());
             }
             try {
                 return new Const(Integer.parseInt(sb.toString()));

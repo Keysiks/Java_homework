@@ -1,5 +1,7 @@
 package expression;
 
+import expression.exceptions.ExceptionsChecker;
+
 public class Subtract extends Binary {
 
     public Subtract(MyExpression left, MyExpression right) {
@@ -13,7 +15,7 @@ public class Subtract extends Binary {
 
     @Override
     protected int apply(int left, int right) {
-        return left - right;
+        return ExceptionsChecker.subtract(left, right);
     }
 
     @Override

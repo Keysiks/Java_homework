@@ -53,5 +53,19 @@ public class BaseParser {
             take();
         }
     }
+
+    protected boolean takeWord(String word) {
+        if (current() != word.charAt(0)) {
+            return false;
+        }
+        for (int i = 0; i < word.length(); i++) {
+            if (!test(word.charAt(i))) {
+                throw source.error("Unexpected symbol: " + current());
+            }
+            take();
+        }
+        return true;
+    }
+
 }
 

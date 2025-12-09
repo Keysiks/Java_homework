@@ -1,7 +1,6 @@
 package expression.exceptions;
 
 import expression.Divide;
-import expression.ExceptionsChecker;
 import expression.MyExpression;
 
 public class CheckedDivide extends Divide {

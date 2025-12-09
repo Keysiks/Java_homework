@@ -1,5 +1,7 @@
 package expression;
 
+import expression.exceptions.ExceptionsChecker;
+
 public class Divide extends Binary {
 
     public Divide(MyExpression left, MyExpression right) {
@@ -13,7 +15,7 @@ public class Divide extends Binary {
 
     @Override
     protected int apply(int left, int right) {
-        return left / right;
+        return ExceptionsChecker.divide(left, right);
     }
 
     @Override

@@ -14,4 +14,4 @@ javac -d "$OUT" \
   "$ROOT"/expression/parser/*.java \
 
 
-java -ea -cp "$OUT" expression.exceptions.ExceptionsTest easy Base
+java -ea -cp "$OUT" expression.exceptions.ExceptionsTest easy 4142

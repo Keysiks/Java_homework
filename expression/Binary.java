@@ -1,6 +1,8 @@
 // java
 package expression;
 
+import expression.exceptions.OverflowException;
+
 public abstract class Binary implements MyExpression {
     protected final MyExpression left;
     protected final  MyExpression right;
@@ -53,5 +55,22 @@ public abstract class Binary implements MyExpression {
     protected abstract int apply(int left, int right);
 
     protected abstract double apply(double left, double right);
+
+    protected int evklids_alg(int a, int b) {
+        if ((a == Integer.MIN_VALUE && b == 0) ||
+                (b == Integer.MIN_VALUE && a == 0) ||
+                (a == Integer.MIN_VALUE && b == Integer.MIN_VALUE)) {
+            throw new OverflowException("OverflowException");
+        }
+        while (b != 0) {
+            int t = a % b;
+            a = b;
+            b = t;
+        }
+        if (a < 0) {
+            a = -a;
+        }
+        return a;
+    }
 
 }

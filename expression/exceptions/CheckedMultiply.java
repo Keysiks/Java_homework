@@ -1,6 +1,5 @@
 package expression.exceptions;
 
-import expression.ExceptionsChecker;
 import expression.Multiply;
 import expression.MyExpression;
 

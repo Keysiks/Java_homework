@@ -1,5 +1,5 @@
 package expression.exceptions;
-import  expression.*;
+import expression.*;
 
 public class CheckedAdd extends Add{
     public CheckedAdd(MyExpression left, MyExpression right) {
@@ -7,7 +7,7 @@ public class CheckedAdd extends Add{
     }
 
     @Override
-    protected  int apply(int left, int right) {
+    protected int apply(int left, int right) {
         return ExceptionsChecker.add(left, right);
     }
 }

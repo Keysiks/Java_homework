@@ -1,7 +1,4 @@
-package expression;
-
-import expression.exceptions.DivisionByZeroException;
-import expression.exceptions.OverflowException;
+package expression.exceptions;
 
 
 public class ExceptionsChecker {
@@ -11,33 +8,36 @@ public class ExceptionsChecker {
     private ExceptionsChecker() {}
 
     public static int add(int a, int b) {
-        if (b > 0 && a > maxInt - b) {
+        if (a > 0 && b > 0 && a > maxInt - b) {
             throw new OverflowException("OverflowException");
         }
-        if (b < 0 && a < minInt - b) {
+        if (a < 0 && b < 0 && a < minInt - b) {
             throw new OverflowException("OverflowException");
         }
         return a + b;
     }
 
     public  static int subtract(int a, int b) {
-        if (b < 0 && a < minInt + b) {
+        if (b > 0 && a < minInt + b) {
             throw new OverflowException("OverflowException");
         }
-        if (b > 0 && a > maxInt - b) {
+        if (b < 0 && a > maxInt + b) {
             throw new OverflowException("OverflowException");
         }
         return a - b;
     }
 
     public  static int multiply(int a, int b) {
-        if ((a > 0) & (b > 0 && a > Integer.MAX_VALUE / b ||
-                    b < 0 && b < Integer.MIN_VALUE / a)) {
+        if (a == 0 || b == 0){
+            return 0;
+        }
+        if ((a > 0) & (b > 0 && a > maxInt / b ||
+                    b < 0 && b < minInt / a)) {
                 throw new OverflowException("OverflowException");
 
         }
-        if (b > 0 && a < Integer.MIN_VALUE / b ||
-                b < 0 && a < Integer.MAX_VALUE / b) {
+        if (b > 0 && a < minInt / b ||
+                b < 0 && a < maxInt / b) {
             throw new OverflowException("OverflowException");
         }
         return  a * b;
@@ -47,16 +47,17 @@ public class ExceptionsChecker {
         if (b == 0) {
             throw new DivisionByZeroException("DivisionByZeroException");
         }
-        if (a == Integer.MIN_VALUE && b == -1) {
+        if (a == minInt && b == -1) {
             throw new OverflowException("OverflowException");
         }
         return a / b;
     }
 
     public static int negate(int a) {
-        if (a == Integer.MIN_VALUE) {
+        if (a == minInt) {
             throw new OverflowException("OverflowException");
         }
         return -a;
     }
 }
+
