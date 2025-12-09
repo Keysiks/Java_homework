@@ -12,4 +12,4 @@ javac -d "$OUT" \
   "$ROOT"/expression/common/*.java \
   "$ROOT"/expression/parser/*.java
 
-java -ea -cp "$OUT" expression.parser.ParserTest easy Base
+java -ea -cp "$OUT" expression.parser.ParserTest easy 4142

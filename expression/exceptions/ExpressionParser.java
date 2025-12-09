@@ -9,8 +9,7 @@ public class ExpressionParser implements TripleParser {
     @Override
     public MyExpression parse(String expression) {
         Parser parser = new Parser(new StringSource(expression));
-        MyExpression result = parser.parseExpression();
-        return result;
+        return parser.parseExpression();
     }
 
     private static class Parser extends BaseParser {
@@ -23,7 +22,7 @@ public class ExpressionParser implements TripleParser {
             MyExpression result = parseGcdLcm();
             skipWhitespace();
             if (!checkEOF()) {
-                throw source.error("Unexpected character: " + current());
+                throw new CharacterException("Unexpected character: " + current());
             }
             return result;
         }
@@ -34,12 +33,12 @@ public class ExpressionParser implements TripleParser {
                 skipWhitespace();
                 if (takeWord("gcd")) {
                     if (Character.isDigit(current())) {
-                        throw source.error("Unexpected character: " + current());
+                        throw new CharacterException("Unexpected character: " + current());
                     }
                     left = new GCD(left, parseAddSub());
                 } else if (takeWord("lcm")) {
                     if (Character.isDigit(current())) {
-                        throw source.error("Unexpected character: " + current());
+                        throw new CharacterException("Unexpected character: " + current());
                     }
                     left = new LCM(left, parseAddSub());
                 } else {
@@ -89,9 +88,9 @@ public class ExpressionParser implements TripleParser {
             while (true) {
                 skipWhitespace();
                 if (take('+')) {
-                    left = new Add(left, parseMulDiv());
+                    left = new CheckedAdd(left, parseMulDiv());
                 } else if (take('-')) {
-                    left = new Subtract(left, parseMulDiv());
+                    left = new CheckedSubtract(left, parseMulDiv());
                 } else {
                     return left;
                 }
@@ -103,9 +102,9 @@ public class ExpressionParser implements TripleParser {
             while (true) {
                 skipWhitespace();
                 if (take('*')) {
-                    left = new Multiply(left, parseUnary());
+                    left = new CheckedMultiply(left, parseUnary());
                 } else if (take('/')) {
-                    left = new Divide(left, parseUnary());
+                    left = new CheckedDivide(left, parseUnary());
                 } else {
                     return left;
                 }
@@ -119,7 +118,7 @@ public class ExpressionParser implements TripleParser {
                     return parseNumber(true);
                 }
                 skipWhitespace();
-                return new Negate(parseUnary());
+                return new CheckedNegate(parseUnary());
             }
             if (take('(')) {
                 MyExpression inside = parseGcdLcm();
@@ -133,7 +132,7 @@ public class ExpressionParser implements TripleParser {
             if (Character.isLetter(current())) {
                 return parseVariable();
             }
-            throw source.error("Unexpected symbol: " + current());
+            throw new SymbolException("Unexpected symbol: " + current());
         }
 
         private MyExpression parseVariable() {
@@ -144,7 +143,7 @@ public class ExpressionParser implements TripleParser {
             }
             String name = sb.toString();
             if (!name.equals("x") && !name.equals("y") && !name.equals("z")) {
-                throw source.error("Unexpected variable: " + name);
+                throw new VariableException("Unexpected variable: " + name);
             }
             return new Variable(name);
         }
@@ -161,12 +160,12 @@ public class ExpressionParser implements TripleParser {
                 throw source.error("Number expected");
             }
             if (Character.isLetter(current())) {
-                throw source.error("Unexpected character: " + current());
+                throw new CharacterException("Unexpected character: " + current());
             }
             try {
                 return new Const(Integer.parseInt(sb.toString()));
             } catch (NumberFormatException e) {
-                throw source.error("Invalid integer: " + sb);
+                throw new InvalidIntegerException("Invalid integer: " + sb);
             }
         }
     }
