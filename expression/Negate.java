@@ -1,9 +1,9 @@
 package expression;
 
 public class Negate implements MyExpression {
-    private final Expression value;
+    private final MyExpression value;
 
-    public Negate(Expression value) {
+    public Negate(MyExpression value) {
         this.value = value;
     }
 
@@ -14,12 +14,12 @@ public class Negate implements MyExpression {
 
     @Override
     public int evaluate(int x, int y, int z) {
-        return -((TripleExpression) value).evaluate(x, y, z);
+        return -(value).evaluate(x, y, z);
     }
 
     @Override
     public double evaluateD(double x, double y, double z) {
-        return -((DoubleTripleExpression) value).evaluateD(x, y, z);
+        return -(value).evaluateD(x, y, z);
     }
 
     @Override
