@@ -1,6 +1,5 @@
 package expression;
 
-import expression.exceptions.ExceptionsChecker;
 
 public class Multiply extends Binary {
 
@@ -15,7 +14,7 @@ public class Multiply extends Binary {
 
     @Override
     protected int apply(int left, int right) {
-        return ExceptionsChecker.multiply(left, right);
+        return left * right;
     }
 
     @Override

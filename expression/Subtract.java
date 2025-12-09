@@ -15,7 +15,7 @@ public class Subtract extends Binary {
 
     @Override
     protected int apply(int left, int right) {
-        return ExceptionsChecker.subtract(left, right);
+        return left - right;
     }
 
     @Override

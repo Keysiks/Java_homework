@@ -1,6 +1,5 @@
 package expression;
 
-import expression.exceptions.ExceptionsChecker;
 
 public class Negate implements MyExpression {
     private final MyExpression value;
@@ -11,12 +10,12 @@ public class Negate implements MyExpression {
 
     @Override
     public int evaluate(int x) {
-        return ExceptionsChecker.negate(value.evaluate(x));
+        return -value.evaluate(x);
     }
 
     @Override
     public int evaluate(int x, int y, int z) {
-        return ExceptionsChecker.negate((value).evaluate(x, y, z));
+        return -((value).evaluate(x, y, z));
     }
 
     @Override

@@ -16,7 +16,7 @@ public class Add extends Binary {
 
     @Override
     protected int apply(int left, int right) {
-        return ExceptionsChecker.add(left, right);
+        return left + right;
     }
 
     @Override
