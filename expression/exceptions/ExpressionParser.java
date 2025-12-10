@@ -22,7 +22,7 @@ public class ExpressionParser implements TripleParser {
             MyExpression result = parseGcdLcm();
             skipWhitespace();
             if (!checkEOF()) {
-                throw new CharacterException("Unexpected character: " + current());
+                throw new CharacterException("Unexpected character: " + getNeighborhood());
             }
             return result;
         }
@@ -33,12 +33,12 @@ public class ExpressionParser implements TripleParser {
                 skipWhitespace();
                 if (takeWord("gcd")) {
                     if (Character.isDigit(current())) {
-                        throw new CharacterException("Unexpected character: " + current());
+                        throw new CharacterException("Unexpected character: " + getNeighborhood());
                     }
                     left = new GCD(left, parseAddSub());
                 } else if (takeWord("lcm")) {
                     if (Character.isDigit(current())) {
-                        throw new CharacterException("Unexpected character: " + current());
+                        throw new CharacterException("Unexpected character: " + getNeighborhood());
                     }
                     left = new LCM(left, parseAddSub());
                 } else {
@@ -132,7 +132,7 @@ public class ExpressionParser implements TripleParser {
             if (Character.isLetter(current())) {
                 return parseVariable();
             }
-            throw new SymbolException("Unexpected symbol: " + current());
+            throw new SymbolException("Unexpected symbol: " + getNeighborhood());
         }
 
         private MyExpression parseVariable() {
@@ -160,7 +160,7 @@ public class ExpressionParser implements TripleParser {
                 throw source.error("Number expected");
             }
             if (Character.isLetter(current())) {
-                throw new CharacterException("Unexpected character: " + current());
+                throw new CharacterException("Unexpected character: " + getNeighborhood());
             }
             try {
                 return new Const(Integer.parseInt(sb.toString()));

@@ -12,6 +12,10 @@ public class BaseParser {
         take();
     }
 
+    protected String getNeighborhood() {
+        return source.getNeighborhood();
+    }
+
     protected char current() {
         return ch;
     }

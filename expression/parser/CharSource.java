@@ -6,4 +6,6 @@ public interface CharSource {
     char next();
 
     IllegalArgumentException error(String message);
+
+    String getNeighborhood();
 }
